@@ -1,0 +1,196 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Dealer {
+  id            Int       @id @default(autoincrement())
+  name          String
+  email         String    @unique
+  phone         String?
+  addressLine1  String?
+  addressLine2  String?
+  city          String?
+  suburb        String?
+  postCode      String?
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  users         User[]
+  customers     Customer[]
+
+  @@map("dealers")
+}
+
+model Customer {
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  password      String    @unique
+  firstName     String
+  lastName      String
+  addressLine1  String
+  addressLine2  String?
+  city          String?
+  suburb        String?
+  postCode      String?
+  phoneNumber   String    @unique
+  contactEmail  String?   @unique
+  dateOfBirth   DateTime?
+  gender        String?
+  notes         String?
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  dealerId      Int
+  dealer        Dealer    @relation(fields: [dealerId], references: [id])
+  bookings      Booking[]
+
+  @@map("customers")
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  password      String
+  firstName     String
+  lastName      String
+  addressLine1  String
+  addressLine2  String?
+  city          String?
+  suburb        String?
+  postCode      String?
+  phoneNumber   String?
+  avatar        String?
+  dateOfBirth   DateTime?
+  gender        String?
+  isActive      Boolean   @default(true)
+  isVerified    Boolean   @default(false)
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  dealerId      Int?
+  dealer        Dealer?    @relation(fields: [dealerId], references: [id])
+  roleId        Int
+  role          Role      @relation(fields: [roleId], references: [id])
+
+  permissions   UserPermission[]
+  commissions   StaffCommission[]
+  tips          StaffTip[]
+  bookings      Booking[]
+
+  @@map("users")
+}
+
+model Role {
+  id            Int       @id @default(autoincrement())
+  name          String    @unique
+  slug          String    @unique
+  description   String?
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  users         User[]
+  permissions   RolePermission[]
+
+  @@map("roles")
+}
+
+model Permission {
+  id            Int       @id @default(autoincrement())
+  name          String    @unique
+  slug          String    @unique
+  description   String?
+  module        String?
+  action        String?
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  rolePermissions RolePermission[]
+  userPermissions  UserPermission[]
+
+  @@map("permissions")
+}
+
+model RolePermission {
+  id            Int       @id @default(autoincrement())
+  roleId        Int
+  permissionId  Int
+  createdAt     DateTime  @default(now())
+
+  role          Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission    Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+model UserPermission {
+  id            Int       @id @default(autoincrement())
+  userId        Int
+  permissionId  Int
+  isGranted     Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  permission    Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, permissionId])
+  @@map("user_permissions")
+}
+
+model StaffCommission {
+  id            Int       @id @default(autoincrement())
+  userId        Int
+  amount        Float
+  currency      String    @default("USD")
+  period        String
+  description   String?
+  isPaid        Boolean   @default(false)
+  paidAt        DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("staff_commissions")
+}
+
+model StaffTip {
+  id            Int       @id @default(autoincrement())
+  userId        Int
+  amount        Float
+  currency      String    @default("USD")
+  bookingId     Int?
+  description   String?
+  receivedAt    DateTime  @default(now())
+  createdAt     DateTime  @default(now())
+
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("staff_tips")
+}
+
+model Booking {
+  id            Int       @id @default(autoincrement())
+  customerId    Int
+  staffId       Int?
+  bookingDate   DateTime
+  status        String    @default("pending")
+  notes         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  customer      Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  staff         User?     @relation(fields: [staffId], references: [id])
+
+  @@map("bookings")
+}

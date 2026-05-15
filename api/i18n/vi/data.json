@@ -1,0 +1,5 @@
+{
+  "EMAIL_ALREADY_EXISTS": "Email đã tồn tại",
+  "AUTH.INVALID_CREDENTIALS": "Thông tin đăng nhập không hợp lệ",
+  "AUTH.USER_ACCOUNT_INACTIVE": "Tài khoản người dùng không hoạt động"
+}

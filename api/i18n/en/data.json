@@ -1,0 +1,5 @@
+{
+  "EMAIL_ALREADY_EXISTS": "Email already exists",
+  "AUTH.INVALID_CREDENTIALS": "Invalid credentials",
+  "AUTH.USER_ACCOUNT_INACTIVE": "User account is inactive"
+}
