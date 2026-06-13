@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Default Dealer",
+    "email": "dealer@osbnails.com",
+    "phone": "+1234567890",
+    "addressLine1": "123 Main St",
+    "addressLine2": "Apt 4B",
+    "city": "New York",
+    "suburb": "Manhattan",
+    "postCode": "10001"
+  }
+]

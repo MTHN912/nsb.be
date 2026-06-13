@@ -56,8 +56,8 @@ model Customer {
 
 model User {
   id            Int       @id @default(autoincrement())
-  email         String    @unique
-  password      String
+  email         String?   @unique
+  password      String?
   firstName     String
   lastName      String
   addressLine1  String
@@ -77,13 +77,13 @@ model User {
 
   dealerId      Int?
   dealer        Dealer?    @relation(fields: [dealerId], references: [id])
-  roleId        Int
-  role          Role      @relation(fields: [roleId], references: [id])
 
   permissions   UserPermission[]
   commissions   StaffCommission[]
   tips          StaffTip[]
+  incomes       StaffIncome[]
   bookings      Booking[]
+  roles         UserRole[]
 
   @@map("users")
 }
@@ -91,14 +91,14 @@ model User {
 model Role {
   id            Int       @id @default(autoincrement())
   name          String    @unique
-  slug          String    @unique
+  code          String?
   description   String?
   isActive      Boolean   @default(true)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  users         User[]
   permissions   RolePermission[]
+  userRoles     UserRole[]
 
   @@map("roles")
 }
@@ -147,6 +147,19 @@ model UserPermission {
   @@map("user_permissions")
 }
 
+model UserRole {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  roleId    Int
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId])
+  @@map("user_roles")
+}
+
 model StaffCommission {
   id            Int       @id @default(autoincrement())
   userId        Int
@@ -159,7 +172,8 @@ model StaffCommission {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  incomes       StaffIncome[]
 
   @@map("staff_commissions")
 }
@@ -174,9 +188,40 @@ model StaffTip {
   receivedAt    DateTime  @default(now())
   createdAt     DateTime  @default(now())
 
-  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  incomes       StaffIncome[]
 
   @@map("staff_tips")
+}
+
+model StaffIncome {
+  id              Int                  @id @default(autoincrement())
+  userId          Int
+  inComeDate      DateTime
+  staffComissonId Int?
+  staffTipsId     Int?
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+  user            User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  staffCommission StaffCommission?     @relation(fields: [staffComissonId], references: [id], onDelete: SetNull)
+  staffTip        StaffTip?            @relation(fields: [staffTipsId], references: [id], onDelete: SetNull)
+  services        StaffIncomeService[]
+
+  @@map("staff_incomes")
+}
+
+model StaffIncomeService {
+  id            Int          @id @default(autoincrement())
+  staffIncomeId Int
+  serviceId     Int
+  createdAt     DateTime     @default(now())
+
+  staffIncome   StaffIncome  @relation(fields: [staffIncomeId], references: [id], onDelete: Cascade)
+  service       Service      @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([staffIncomeId, serviceId])
+  @@map("staff_income_services")
 }
 
 model Booking {
@@ -193,4 +238,103 @@ model Booking {
   staff         User?     @relation(fields: [staffId], references: [id])
 
   @@map("bookings")
+}
+
+model Package {
+  id                Int              @id @default(autoincrement())
+  code              String           @unique
+  name              String
+  description       String?
+  imageUrl          String?
+  isActive          Boolean          @default(true)
+  sortOrder         Int?             @default(0)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  packageServices   PackageService[]
+
+  @@map("packages")
+}
+
+model Service {
+  id                Int                  @id @default(autoincrement())
+  code              String               @unique
+  name              String
+  description       String?
+  price             Float
+  currency          String               @default("USD")
+  duration          Int                  @default(30)
+  durationUnit      String               @default("minutes")
+  imageUrl          String?
+  isActive          Boolean              @default(true)
+  sortOrder         Int?                 @default(0)
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+
+  packageServices   PackageService[]
+  staffIncomeServices StaffIncomeService[]
+
+  @@map("services")
+}
+
+model PackageService {
+  id          Int      @id @default(autoincrement())
+  packageId   Int
+  serviceId   Int
+  createdAt   DateTime @default(now())
+
+  package     Package  @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  service     Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([packageId, serviceId])
+  @@map("package_services")
+}
+
+model GlobalPackage {
+  id                Int                  @id @default(autoincrement())
+  code              String               @unique
+  name              String
+  description       String?
+  imageUrl          String?
+  isActive          Boolean              @default(true)
+  sortOrder         Int?                 @default(0)
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+
+  globalPackageServices GlobalPackageService[]
+
+  @@map("global_packages")
+}
+
+model GlobalService {
+  id                Int                  @id @default(autoincrement())
+  code              String               @unique
+  name              String
+  description       String?
+  price             Float
+  currency          String               @default("USD")
+  duration          Int                  @default(30)
+  durationUnit      String               @default("minutes")
+  imageUrl          String?
+  isActive          Boolean              @default(true)
+  sortOrder         Int?                 @default(0)
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+
+  globalPackageServices GlobalPackageService[]
+
+  @@map("global_services")
+}
+
+model GlobalPackageService {
+  id              Int            @id @default(autoincrement())
+  globalPackageId Int
+  globalServiceId Int
+  createdAt       DateTime       @default(now())
+
+  globalPackage   GlobalPackage  @relation(fields: [globalPackageId], references: [id], onDelete: Cascade)
+  globalService   GlobalService  @relation(fields: [globalServiceId], references: [id], onDelete: Cascade)
+
+  @@unique([globalPackageId, globalServiceId])
+  @@map("global_package_services")
 }

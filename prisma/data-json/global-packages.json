@@ -1,0 +1,10 @@
+[
+  {
+    "code": "GLOBAL_NAIL_SERVICES",
+    "name": "Global Nail Services",
+    "description": "Global package containing all nail services available across all dealers",
+    "imageUrl": null,
+    "isActive": true,
+    "sortOrder": 0
+  }
+]

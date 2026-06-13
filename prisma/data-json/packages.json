@@ -1,0 +1,18 @@
+[
+  {
+    "code": "DIPPING_POWDER_PACKAGE",
+    "name": "Dipping Powder Package",
+    "description": "Package containing all dipping powder services",
+    "imageUrl": null,
+    "isActive": true,
+    "sortOrder": 1
+  },
+  {
+    "code": "OMBRE_PACKAGE",
+    "name": "Ombre Package",
+    "description": "Package containing all ombre services",
+    "imageUrl": null,
+    "isActive": true,
+    "sortOrder": 2
+  }
+]

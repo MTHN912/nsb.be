@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Staff",
+    "code": "staff",
+    "description": "Staff role for employees who handle daily operations",
+    "isActive": true
+  },
+  {
+    "name": "Super Admin",
+    "code": "super_admin",
+    "description": "Super administrator with full system access and control",
+    "isActive": true
+  },
+  {
+    "name": "Dealer Manager",
+    "code": "dealer_manager",
+    "description": "Manager role for overseeing dealer operations and relationships",
+    "isActive": true
+  }
+]

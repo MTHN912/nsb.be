@@ -1,0 +1,62 @@
+[
+  {
+    "code": "DIPPING_POWDER_FULL_SET_WITHOUT_TIP",
+    "name": "Full Set without Tip",
+    "description": "Dipping powder full set without tip",
+    "price": 45,
+    "currency": "USD",
+    "duration": 60,
+    "durationUnit": "minutes",
+    "imageUrl": null,
+    "isActive": true,
+    "sortOrder": 1
+  },
+  {
+    "code": "DIPPING_POWDER_FULL_SET_WITH_TIP",
+    "name": "Full Set with Tip",
+    "description": "Dipping powder full set with tip",
+    "price": 45,
+    "currency": "USD",
+    "duration": 75,
+    "durationUnit": "minutes",
+    "imageUrl": null,
+    "isActive": true,
+    "sortOrder": 2
+  },
+  {
+    "code": "OMBRE_FULL_SET",
+    "name": "Full Set",
+    "description": "Ombre full set",
+    "price": 50,
+    "currency": "USD",
+    "duration": 90,
+    "durationUnit": "minutes",
+    "imageUrl": null,
+    "isActive": true,
+    "sortOrder": 3
+  },
+  {
+    "code": "OMBRE_REFILL_SAME_COLOR",
+    "name": "Refill Same Color",
+    "description": "Ombre refill with same color",
+    "price": 35,
+    "currency": "USD",
+    "duration": 45,
+    "durationUnit": "minutes",
+    "imageUrl": null,
+    "isActive": true,
+    "sortOrder": 4
+  },
+  {
+    "code": "OMBRE_REFILL_DIFFERENT_COLOR",
+    "name": "Refill Different Color",
+    "description": "Ombre refill with different color",
+    "price": 45,
+    "currency": "USD",
+    "duration": 60,
+    "durationUnit": "minutes",
+    "imageUrl": null,
+    "isActive": true,
+    "sortOrder": 5
+  }
+]
