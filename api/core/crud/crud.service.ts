@@ -67,8 +67,8 @@ export class CrudService<T> {
   protected async findAll(
     params: QueryParams = {},
     request?: Request,
-  ): Promise<T[]> {
-    return this.prismaClient.findMany({
+  ): Promise<{ data: T[]; total: number }> {
+    const data = await this.prismaClient.findMany({
       where: this.buildWhere(params.where, request),
       orderBy: params.orderBy,
       skip: params.skip,
@@ -76,6 +76,8 @@ export class CrudService<T> {
       include: params.include,
       select: params.select,
     });
+
+    return { data, total: data.length };
   }
 
   public async findOne(

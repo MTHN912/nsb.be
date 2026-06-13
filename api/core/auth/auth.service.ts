@@ -36,10 +36,13 @@ export class AuthService {
 
     await this.userService.updateUserLastLogin(user.id);
 
+    const roles = (user as any).roles || [];
+    const roleCodes = roles.map((r: any) => r.role?.code).filter(Boolean);
+
     const payload = {
       sub: user.id,
       email: user.email,
-      roleId: user.roleId,
+      roles: roleCodes,
       dealerId: user.dealerId,
     };
 
@@ -50,7 +53,7 @@ export class AuthService {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        roleId: user.roleId,
+        roles: roleCodes,
         dealerId: user.dealerId,
       },
     };

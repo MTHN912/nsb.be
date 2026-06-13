@@ -1,6 +1,7 @@
 import { Controller, Post, Body, Get, Query, Req, UseGuards, Param } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { CreateStaffDto } from './dto/create-staff.dto';
 // import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('users')
@@ -15,6 +16,18 @@ export class UserController {
   @Get(':id')
   // @UseGuards(JwtAuthGuard)
   async findOne(@Param('id') id: string, @Req() req: any) {
-    return this.userService.findOne(parseInt(id), { include: { role: true, dealer: true } }, req);
+    return this.userService.findOne(parseInt(id), { include: { roles: { include: { role: true } }, dealer: true } }, req);
+  }
+
+  @Post('search')
+  // @UseGuards(JwtAuthGuard)
+  async findAll(@Body() searchUserDto: any, @Req() req: any) {
+    return this.userService.findAllUsers(searchUserDto, req);
+  }
+
+  @Post('staff')
+  // @UseGuards(JwtAuthGuard)
+  async createStaff(@Body() createStaffDto: CreateStaffDto, @Req() req: any) {
+    return this.userService.createStaff(createStaffDto, req);
   }
 }
