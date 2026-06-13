@@ -1,5 +1,9 @@
 {
   "EMAIL_ALREADY_EXISTS": "Email already exists",
   "AUTH.INVALID_CREDENTIALS": "Invalid credentials",
-  "AUTH.USER_ACCOUNT_INACTIVE": "User account is inactive"
+  "AUTH.USER_ACCOUNT_INACTIVE": "User account is inactive",
+  "ROLE.STAFF_NOT_FOUND": "Staff role not found",
+  "PACKAGE.NOT_FOUND": "Package not found",
+  "SERVICE.NOT_FOUND": "Service not found",
+  "PACKAGE_SERVICE.ALREADY_EXISTS": "Service already added to package"
 }

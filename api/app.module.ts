@@ -6,6 +6,9 @@ import { PrismaModule } from './core/prisma/prisma.module';
 import { JwtModule } from './core/jwt/jwt.module';
 import { AuthModule } from './core/auth/auth.module';
 import { UserModule } from './core/user/user.module';
+import { ServiceModule } from './core/service/service.module';
+import { PackageModule } from './core/package/package.module';
+import { StaffIncomeModule } from './core/staff-income/staff-income.module';
 import { I18nExceptionFilter } from './shared/filters/i18n-exception.filter';
 
 @Module({
@@ -30,13 +33,16 @@ import { I18nExceptionFilter } from './shared/filters/i18n-exception.filter';
     JwtModule,
     AuthModule,
     UserModule,
+    ServiceModule,
+    PackageModule,
+    StaffIncomeModule,
   ],
   controllers: [],
   providers: [
-    {
-      provide: APP_FILTER,
-      useClass: I18nExceptionFilter,
-    },
+    // {
+    //   provide: APP_FILTER,
+    //   useClass: I18nExceptionFilter,
+    // },
   ],
 })
 export class AppModule {}
