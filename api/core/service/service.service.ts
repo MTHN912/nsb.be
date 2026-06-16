@@ -19,20 +19,15 @@ export class ServiceService extends CrudService<any> {
   }
 
   async addServiceToPackage(packageId: number, serviceId: number): Promise<any> {
-    const pkg = await this.packageService.findOne(
+    await this.packageService.findOne(
       { id: packageId },
       { throwNotFound: true },
     );
 
-    if (!pkg) {
-      throw new NotFoundException('PACKAGE.NOT_FOUND');
-    }
-
-    const service = await this.findOne({ id: serviceId }, { throwNotFound: false });
-
-    if (!service) {
-      throw new NotFoundException('SERVICE.NOT_FOUND');
-    }
+    await this.findOne(
+      { id: serviceId },
+      { throwNotFound: true },
+    );
 
     const existingRelation = await this.packageServiceService.findOne(
       { packageId, serviceId },
@@ -91,6 +86,7 @@ export class ServiceService extends CrudService<any> {
     const pkg = await this.packageService.findOne(
       { id: packageId },
       {
+        throwNotFound: true,
         include: {
           packageServices: {
             include: {
@@ -100,10 +96,6 @@ export class ServiceService extends CrudService<any> {
         },
       },
     );
-
-    if (!pkg) {
-      throw new NotFoundException('PACKAGE.NOT_FOUND');
-    }
 
     return pkg.packageServices.map((ps) => ps.service);
   }

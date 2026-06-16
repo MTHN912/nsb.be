@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { I18nModule } from 'nestjs-i18n';
+import { I18nModule, I18nService } from 'nestjs-i18n';
 import { APP_FILTER } from '@nestjs/core';
+import * as path from 'path';
 import { PrismaModule } from './core/prisma/prisma.module';
 import { JwtModule } from './core/jwt/jwt.module';
 import { AuthModule } from './core/auth/auth.module';
@@ -23,7 +24,7 @@ import { I18nExceptionFilter } from './shared/filters/i18n-exception.filter';
     I18nModule.forRoot({
       fallbackLanguage: process.env.DEFAULT_LANGUAGE || 'en',
       loaderOptions: {
-        path: './api/i18n/',
+        path: path.join(process.cwd(), 'api', 'i18n'),
         watch: true,
       },
     }),
@@ -39,10 +40,11 @@ import { I18nExceptionFilter } from './shared/filters/i18n-exception.filter';
   ],
   controllers: [],
   providers: [
-    // {
-    //   provide: APP_FILTER,
-    //   useClass: I18nExceptionFilter,
-    // },
+    {
+      provide: APP_FILTER,
+      useFactory: (i18n: I18nService) => new I18nExceptionFilter(i18n),
+      inject: [I18nService],
+    },
   ],
 })
 export class AppModule {}

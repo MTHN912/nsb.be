@@ -5,7 +5,7 @@ import { JwtService as NestJwtService } from '@nestjs/jwt';
 export class JwtService {
   constructor(private readonly jwtService: NestJwtService) {}
 
-  async sign(payload: any): Promise<string> {
+  sign(payload: any): string {
     return this.jwtService.sign(payload);
   }
 

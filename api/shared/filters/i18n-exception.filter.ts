@@ -39,16 +39,12 @@ export class I18nExceptionFilter implements ExceptionFilter {
     const acceptLanguage = request.headers['accept-language'] as string | undefined;
     const lang = acceptLanguage || 'en';
 
-    // Translate the message if it's a translation key
     let translatedMessage = message;
-    try {
-      const translated = await this.i18n.translate(message, { lang }) as string;
-      if (translated && translated !== message) {
+      const translationKey = `translation.${message}`;
+      const translated = await this.i18n.translate(translationKey, { lang }) as string;
+      if (translated && translated !== translationKey) {
         translatedMessage = translated;
       }
-    } catch (error) {
-      // If translation fails, use original message
-    }
 
     response.status(status).json({
       statusCode: status,
