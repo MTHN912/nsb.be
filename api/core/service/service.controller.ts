@@ -1,11 +1,13 @@
-import { Controller, Post, Body, Param, Patch, Req } from '@nestjs/common';
+import { Controller, Post, Body, Param, Patch, Req, UseGuards } from '@nestjs/common';
 import { ServiceService } from './service.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { UpdateServiceIsActiveDto } from './dto/update-service-is-active.dto';
 import { AddServiceToPackageDto } from './dto/add-service-to-package.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('services')
+@UseGuards(JwtAuthGuard)
 export class ServiceController {
   constructor(private readonly serviceService: ServiceService) {}
 

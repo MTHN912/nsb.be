@@ -1,8 +1,10 @@
-import { Controller, Post, Body, Param, Req } from '@nestjs/common';
+import { Controller, Post, Body, Param, Req, UseGuards } from '@nestjs/common';
 import { PackageService } from './package.service';
 import { CreatePackageDto } from './dto/create-package.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('packages')
+@UseGuards(JwtAuthGuard)
 export class PackageController {
   constructor(private readonly packageService: PackageService) {}
 
