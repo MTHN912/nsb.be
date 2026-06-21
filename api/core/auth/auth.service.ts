@@ -3,6 +3,7 @@ import { UserService } from '../user/user.service';
 import { HashUtil } from '../../shared/ultils/hash.util';
 import { JwtService } from '../jwt/jwt.service';
 import { User } from '@prisma/client';
+import { LogoutResponseDto } from './dto/logout.dto';
 
 @Injectable()
 export class AuthService {
@@ -67,6 +68,13 @@ export class AuthService {
         roles: roleCodes,
         dealerId: user.dealerId,
       },
+    };
+  }
+
+  async logout(): Promise<LogoutResponseDto> {
+    return {
+      message: 'LOGOUT_SUCCESS',
+      clearStorage: true,
     };
   }
 }
