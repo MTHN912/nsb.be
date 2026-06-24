@@ -30,12 +30,12 @@ export class CreateStaffDto {
   @ApiProperty({ example: 'Manhattan', required: false })
   @IsString()
   @IsOptional()
-  suburb?: string;
+  state?: string;
 
   @ApiProperty({ example: '10001', required: false })
   @IsString()
   @IsOptional()
-  postCode?: string;
+  zipCode?: string;
 
   @ApiProperty({ example: '+1234567890', required: false })
   @IsString()

@@ -15,8 +15,8 @@ model Dealer {
   addressLine1  String?
   addressLine2  String?
   city          String?
-  suburb        String?
-  postCode      String?
+  state         String?
+  zipCode       String?
   isActive      Boolean   @default(true)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -36,8 +36,8 @@ model Customer {
   addressLine1  String
   addressLine2  String?
   city          String?
-  suburb        String?
-  postCode      String?
+  state         String?
+  zipCode       String?
   phoneNumber   String    @unique
   contactEmail  String?   @unique
   dateOfBirth   DateTime?
@@ -63,8 +63,8 @@ model User {
   addressLine1  String
   addressLine2  String?
   city          String?
-  suburb        String?
-  postCode      String?
+  state         String?
+  zipCode       String?
   phoneNumber   String?
   avatar        String?
   dateOfBirth   DateTime?
