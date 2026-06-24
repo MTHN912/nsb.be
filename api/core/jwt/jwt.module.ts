@@ -14,8 +14,8 @@ import { AuthModule } from '../auth/auth.module';
     UserModule,
     forwardRef(() => AuthModule),
     NestJwtModule.register({
-      secret: process.env.JWT_SECRET || 'your-secret-key',
-      signOptions: { expiresIn: '24h' },
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: process.env.JWT_EXPIRES_IN},
     }),
   ],
   providers: [JwtService, JwtStrategy, LocalStrategy],
