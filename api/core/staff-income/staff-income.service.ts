@@ -4,6 +4,9 @@ import { PrismaService } from '../prisma/prisma.service';
 import { DEFAULT_CURRENCY } from '../../shared/constants/role.constants';
 import { StaffCommissionService } from '../staff-commission/staff-commission.service';
 import { StaffTipService } from '../staff-tip/staff-tip.service';
+import { RedisService } from '../redis/redis.service';
+import { LoggerService } from '../logger/logger.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class StaffIncomeService extends CrudService<any> {
@@ -11,8 +14,11 @@ export class StaffIncomeService extends CrudService<any> {
     protected prisma: PrismaService,
     private readonly staffCommissionService: StaffCommissionService,
     private readonly staffTipService: StaffTipService,
+    protected redisService: RedisService,
+    protected logger: LoggerService,
+    protected configService: ConfigService,
   ) {
-    super(prisma, 'staffIncome');
+    super(prisma, 'staffIncome', redisService, logger, configService);
   }
 
   async createIncome(data: {

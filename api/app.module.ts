@@ -11,6 +11,7 @@ import { ServiceModule } from './core/service/service.module';
 import { PackageModule } from './core/package/package.module';
 import { StaffIncomeModule } from './core/staff-income/staff-income.module';
 import { RedisModule } from './core/redis/redis.module';
+import { LoggerModule } from './core/logger/logger.module';
 import { I18nExceptionFilter } from './shared/filters/i18n-exception.filter';
 
 @Module({
@@ -39,6 +40,7 @@ import { I18nExceptionFilter } from './shared/filters/i18n-exception.filter';
     PackageModule,
     StaffIncomeModule,
     RedisModule,
+    LoggerModule,
   ],
   controllers: [],
   providers: [

@@ -3,6 +3,9 @@ import { CrudService } from '../crud/crud.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { PackageService } from '../package/package.service';
 import { PackageServiceService } from '../package-service/package-service.service';
+import { RedisService } from '../redis/redis.service';
+import { LoggerService } from '../logger/logger.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class ServiceService extends CrudService<any> {
@@ -10,8 +13,11 @@ export class ServiceService extends CrudService<any> {
     protected prisma: PrismaService,
     private readonly packageService: PackageService,
     private readonly packageServiceService: PackageServiceService,
+    protected redisService: RedisService,
+    protected logger: LoggerService,
+    protected configService: ConfigService,
   ) {
-    super(prisma, 'service');
+    super(prisma, 'service', redisService, logger, configService);
   }
 
   async createService(data: any, request?: any): Promise<any> {

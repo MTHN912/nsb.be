@@ -7,6 +7,7 @@ import { LogoutResponseDto } from './dto/logout.dto';
 import { RedisService } from '../redis/redis.service';
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
+import { Request } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -94,7 +95,22 @@ export class AuthService {
     };
   }
 
-  async logout(): Promise<LogoutResponseDto> {
+  async logout(request?: Request): Promise<LogoutResponseDto> {
+    const dealerId = request?.headers['x-dealer-id'] ? Number(request.headers['x-dealer-id']) : null;
+    
+    // Clear cache for all models related to this dealer
+    const modelsToClear = ['user', 'customer', 'package', 'service', 'staffIncome', 'staffCommission', 'staffTip'];
+    
+    for (const model of modelsToClear) {
+      try {
+        const pattern = `${model}:${dealerId || 'global'}:*`;
+        await this.redisService.invalidatePattern(pattern);
+      } catch (error) {
+        // Log error but continue with other models
+        console.error(`Failed to clear cache for ${model}:`, error);
+      }
+    }
+    
     return {
       message: 'LOGOUT_SUCCESS',
       clearStorage: true,

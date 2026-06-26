@@ -7,14 +7,20 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { CreateStaffDto } from './dto/create-staff.dto';
 import { RoleService } from '../role/role.service';
 import { ROLE_NAMES } from '../../shared/constants/role.constants';
+import { RedisService } from '../redis/redis.service';
+import { LoggerService } from '../logger/logger.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UserService extends CrudService<User> {
   constructor(
     protected prisma: PrismaService,
     private readonly roleService: RoleService,
+    protected redisService: RedisService,
+    protected logger: LoggerService,
+    protected configService: ConfigService,
   ) {
-    super(prisma, 'user');
+    super(prisma, 'user', redisService, logger, configService);
   }
 
   async createUser(data: CreateUserDto, request?: any): Promise<User> {

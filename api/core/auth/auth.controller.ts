@@ -31,8 +31,9 @@ export class AuthController {
     description: 'Logout successful. Client should clear localStorage and sessionStorage.',
     type: LogoutResponseDto 
   })
-  async logout(@Res() res: Response): Promise<Response> {
+  async logout(@Req() req: Request, @Res() res: Response): Promise<Response> {
     this.authService.clearAuthCookies(res);
+    await this.authService.logout(req);
     
     return res.json({
       message: 'LOGOUT_SUCCESS',
