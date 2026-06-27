@@ -13,6 +13,12 @@ export class UserController {
     return this.userService.createUser(createUserDto, req);
   }
 
+  @Get('profile')
+  @UseGuards(JwtAuthGuard)
+  async getProfile(@Req() req: any) {
+    return this.userService.getProfile(req.user.id, req);
+  }
+
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   async findOne(@Param('id') id: string, @Req() req: any) {

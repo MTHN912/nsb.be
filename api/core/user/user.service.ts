@@ -125,4 +125,12 @@ export class UserService extends CrudService<User> {
       request,
     );
   }
+
+  async getProfile(userId: number, request?: any): Promise<User> {
+    return this.findOne(
+      { id: userId },
+      { include: { roles: { include: { role: true } }, dealer: true } },
+      request,
+    );
+  }
 }
