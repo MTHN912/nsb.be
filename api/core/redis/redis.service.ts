@@ -87,4 +87,20 @@ export class RedisService {
       throw error;
     }
   }
+
+  async clearAllDataCache(): Promise<void> {
+    try {
+      const allKeys = await this.redis.keys('*');
+      const tokenKeys = allKeys.filter(key => key.includes('refresh_token') || key.includes('access_token'));
+      const dataKeys = allKeys.filter(key => !key.includes('refresh_token') && !key.includes('access_token'));
+      
+      if (dataKeys.length > 0) {
+        await this.redis.del(dataKeys);
+        this.logger.log(`Cleared ${dataKeys.length} data cache keys (kept ${tokenKeys.length} token keys)`);
+      }
+    } catch (error) {
+      this.logger.error(`Failed to clear all data cache`, error.stack);
+      throw error;
+    }
+  }
 }

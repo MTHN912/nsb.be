@@ -299,11 +299,9 @@ export class CrudService<T> {
     }
   }
 
-  private async invalidateCache(request?: Request): Promise<void> {
+  protected async invalidateCache(request?: Request): Promise<void> {
     try {
-      const dealerId = this.getDealerId(request);
-      const pattern = `${this.modelName}:${dealerId || 'global'}:*`;
-      await this.redisService.invalidatePattern(pattern);
+      await this.redisService.clearAllDataCache();
     } catch (error) {
       this.logger.error(`Failed to invalidate cache for ${this.modelName}`, error.stack);
       // Don't throw error - cache invalidation failure shouldn't break the operation

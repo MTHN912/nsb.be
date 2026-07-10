@@ -16,7 +16,7 @@ export class StaffTipService extends CrudService<any> {
     super(prisma, 'staffTip', redisService, logger, configService);
   }
 
-  async createTip(data: any): Promise<any> {
-    return this.create(data);
+  async createTip(data: any, request?: any): Promise<any> {
+    return this.create(data, {}, request);
   }
 }

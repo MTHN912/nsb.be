@@ -27,7 +27,7 @@ export class StaffIncomeService extends CrudService<any> {
     serviceIncome?: number;
     tipsIncome?: number;
     serviceId?: number | number[];
-  }): Promise<any> {
+  }, request?: any): Promise<any> {
     const { userId, inComeDate, serviceIncome, tipsIncome, serviceId } = data;
 
     const incomeDate = typeof inComeDate === 'string' ? new Date(inComeDate) : inComeDate;
@@ -35,32 +35,28 @@ export class StaffIncomeService extends CrudService<any> {
     let staffComissonId: number | null = null;
     let staffTipsId: number | null = null;
 
-    // Create StaffCommission if serviceIncome is provided
     if (serviceIncome && serviceIncome > 0) {
       const commission = await this.staffCommissionService.createCommission({
         userId,
         amount: serviceIncome,
         currency: DEFAULT_CURRENCY,
         period: incomeDate.toISOString().split('T')[0],
-      });
+      }, request);
       staffComissonId = commission.id;
     }
 
-    // Create StaffTip if tipsIncome is provided
     if (tipsIncome && tipsIncome > 0) {
       const tip = await this.staffTipService.createTip({
         userId,
         amount: tipsIncome,
         currency: DEFAULT_CURRENCY,
         receivedAt: incomeDate,
-      });
+      }, request);
       staffTipsId = tip.id;
     }
 
-    // Handle single serviceId or array of serviceIds
     const serviceIds = Array.isArray(serviceId) ? serviceId : (serviceId ? [serviceId] : []);
 
-    // Create single StaffIncome record
     const staffIncome = await this.createIncomeRecord({
       userId,
       inComeDate: incomeDate,
@@ -68,7 +64,6 @@ export class StaffIncomeService extends CrudService<any> {
       staffTipsId,
     });
 
-    // Create junction table records for services if provided
     if (serviceIds.length > 0) {
       await Promise.all(
         serviceIds.map((id) =>

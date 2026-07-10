@@ -16,7 +16,7 @@ export class StaffCommissionService extends CrudService<any> {
     super(prisma, 'staffCommission', redisService, logger, configService);
   }
 
-  async createCommission(data: any): Promise<any> {
-    return this.create(data);
+  async createCommission(data: any, request?: any): Promise<any> {
+    return this.create(data, {}, request);
   }
 }

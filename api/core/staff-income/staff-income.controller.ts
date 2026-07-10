@@ -9,7 +9,7 @@ export class StaffIncomeController {
 
   @Post()
   async createIncome(@Body() createIncomeDto: any, @Req() req: any) {
-    return this.staffIncomeService.createIncome(createIncomeDto);
+    return this.staffIncomeService.createIncome(createIncomeDto, req);
   }
 
   @Post('search')
