@@ -10,6 +10,7 @@ import { UserModule } from './core/user/user.module';
 import { ServiceModule } from './core/service/service.module';
 import { PackageModule } from './core/package/package.module';
 import { StaffIncomeModule } from './core/staff-income/staff-income.module';
+import { BookingModule } from './core/booking/booking.module';
 import { RedisModule } from './core/redis/redis.module';
 import { LoggerModule } from './core/logger/logger.module';
 import { I18nExceptionFilter } from './shared/filters/i18n-exception.filter';
@@ -39,6 +40,7 @@ import { I18nExceptionFilter } from './shared/filters/i18n-exception.filter';
     ServiceModule,
     PackageModule,
     StaffIncomeModule,
+    BookingModule,
     RedisModule,
     LoggerModule,
   ],

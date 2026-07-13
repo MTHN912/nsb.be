@@ -5,5 +5,13 @@
   "ROLE.STAFF_NOT_FOUND": "Staff role not found",
   "PACKAGE.NOT_FOUND": "Package not found",
   "SERVICE.NOT_FOUND": "Service not found",
-  "PACKAGE_SERVICE.ALREADY_EXISTS": "Service already added to package"
+  "PACKAGE_SERVICE.ALREADY_EXISTS": "Service already added to package",
+  "BOOKING.CUSTOMER_NOT_FOUND": "Customer not found",
+  "BOOKING.CUSTOMER_INFO_REQUIRED": "Customer id or customer details are required",
+  "BOOKING.SERVICE_NOT_FOUND": "One or more selected services were not found or are inactive",
+  "BOOKING.STAFF_NOT_FOUND": "Selected staff not found or is inactive",
+  "BOOKING.DEALER_REQUIRED": "Dealer is required to create a customer",
+  "BOOKING.INVALID_TYPE": "Invalid booking type",
+  "BOOKING.INVALID_DATE": "Invalid booking date",
+  "BOOKING.DATE_IN_PAST": "Booking date cannot be in the past"
 }

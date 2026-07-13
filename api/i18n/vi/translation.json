@@ -5,5 +5,13 @@
   "ROLE.STAFF_NOT_FOUND": "Không tìm thấy vai trò nhân viên",
   "PACKAGE.NOT_FOUND": "Không tìm thấy gói dịch vụ",
   "SERVICE.NOT_FOUND": "Không tìm thấy dịch vụ",
-  "PACKAGE_SERVICE.ALREADY_EXISTS": "Dịch vụ đã được thêm vào gói"
+  "PACKAGE_SERVICE.ALREADY_EXISTS": "Dịch vụ đã được thêm vào gói",
+  "BOOKING.CUSTOMER_NOT_FOUND": "Không tìm thấy khách hàng",
+  "BOOKING.CUSTOMER_INFO_REQUIRED": "Cần cung cấp mã khách hàng hoặc thông tin khách hàng",
+  "BOOKING.SERVICE_NOT_FOUND": "Một hoặc nhiều dịch vụ được chọn không tồn tại hoặc đang ngừng hoạt động",
+  "BOOKING.STAFF_NOT_FOUND": "Nhân viên được chọn không tồn tại hoặc đang ngừng hoạt động",
+  "BOOKING.DEALER_REQUIRED": "Cần có đại lý để tạo khách hàng",
+  "BOOKING.INVALID_TYPE": "Loại đặt lịch không hợp lệ",
+  "BOOKING.INVALID_DATE": "Ngày đặt lịch không hợp lệ",
+  "BOOKING.DATE_IN_PAST": "Ngày đặt lịch không được ở trong quá khứ"
 }
